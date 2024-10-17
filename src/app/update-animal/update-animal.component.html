@@ -1,27 +1,30 @@
-<div class="container">
-  <div>
-      <h2>Modifier un Produit :</h2>
-  </div>
-  <form>
-      <div hidden class="col-sm-2 col-md-2 col-lg-2">
-          <label>ID animal</label>
-          <input type="text" [(ngModel)]="currentAnimal.idAnimal" name="idAnimal" class="form-control">
-      </div>
-      <div class="col-sm-4 col-md-4 col-lg-4">
-          <label>Nom animal</label>
-          <input type="text" [(ngModel)]="currentAnimal.nomAnimal" name="nomAnimal" class="form-control">
-      </div>
-      <div class="col-sm-2 col-md-2 col-lg-2">
-          <label>espece</label>
-          <input type="text" [(ngModel)]="currentAnimal.especeAnimal" name="especeAnimal" class="form-control">
-      </div>
-      <div class="col-sm-4 col-md-4 col-lg-4">
-          <label>Date naissance</label>
-          <input type="date" [ngModel]="currentAnimal.dateNaissance | date: 'yyyy-MM-dd'" 
-          (ngModelChange)=" currentAnimal.dateNaissance= $event" name="dateNaissance"  class="form-control">
-      </div>
-      <div class="mt-2">
-          <button type="submit" (click)="updateAnimal()" class="btn btn-success">Modifer</button>
-      </div>
-  </form>
+<div *ngIf="currentAnimal"> <!-- Afficher le formulaire uniquement si currentAnimal est défini -->
+    <div class="container">
+        <h2>Modifier un Animal</h2>
+        <form>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>Nom animal</label>
+                <input type="text" [(ngModel)]="currentAnimal.nomAnimal" name="nomAnimal" class="form-control" required>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>Espèce</label>
+                <input type="text" [(ngModel)]="currentAnimal.especeAnimal" name="especeAnimal" class="form-control"
+                    required>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>Date de naissance</label>
+                <input type="date" [(ngModel)]="currentAnimal.dateNaissance" name="dateNaissance" class="form-control"
+                    required>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+
+                <select class="form-control form-control-lg" [(ngModel)]="updatedGroupeId" name="groupe">
+                    <option *ngFor="let groupe of groupes" [value]="groupe.idGroupe">{{groupe.nomGroupe}}</option>
+                </select>
+            </div>
+            <div class="mt-2">
+                <button type="submit" (click)="updateAnimal()" class="btn btn-success">Modifier</button>
+            </div>
+        </form>
+    </div>
 </div>

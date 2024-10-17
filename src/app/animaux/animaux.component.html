@@ -8,18 +8,20 @@
                     <th>Nom</th>
                     <th>Espèce</th>
                     <th>Date de Naissance</th>
-
+                    <th>Groupe</th>
                 </tr>
+
+
                 <tbody>
                     <tr *ngFor="let animal of animaux">
                         <td>{{animal.idAnimal}}</td>
                         <td>{{animal.nomAnimal}}</td>
                         <td>{{animal.especeAnimal}}</td>
                         <td>{{animal.dateNaissance | date:'dd/MM/yyyy'}}</td>
-
+                        <td>{{animal.groupe.nomGroupe}}</td>
                         <button class="btn btn-danger" (click)="supprimerAnimal(animal)">Supprimer</button>
-                        <td><a class="btn btn-success" [routerLink]="['/updateAnimal', animal.idAnimal]">Modifier</a></td>
-                    
+                        <button class="btn btn-success" [routerLink]="['/updateAnimal', animal.idAnimal]">Modifier</button>                        
+
 
                     </tr>
 

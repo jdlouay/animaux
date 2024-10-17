@@ -1,6 +1,8 @@
+import { Groupe } from './../model/groupe.model';
 import { Component, OnInit } from '@angular/core';
-import { Animal } from '../model/animal.model';
 import { AnimalService } from '../services/animal.service';
+import Animal from '../model/animal.model';
+import { Router } from '@angular/router';  // Importation correcte du Router
 
 @Component({
   selector: 'app-add-animal',
@@ -9,15 +11,34 @@ import { AnimalService } from '../services/animal.service';
 })
 export class AddAnimalComponent implements OnInit {
   newAnimal = new Animal();  // Objet représentant le nouvel animal
-  message: string | undefined;      // Variable pour stocker le message de succès
+  groupes: Groupe[] = [];  // Liste des groupes disponibles
+  newIdgroupe!: number;  // ID du groupe sélectionné
+  newgroupe!: Groupe;  
 
-  constructor(private animalService: AnimalService) {}
+  constructor(
+    private animalService: AnimalService,
+    private router: Router  
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+    this.groupes = this.animalService.listeGroupes();
+  }
 
-  // Méthode pour ajouter un nouvel animal
+
   addAnimal() {
-    this.animalService.ajouterAnimal(this.newAnimal);  // Ajout de l'animal via le service
-    this.message = "Animal " + this.newAnimal.nomAnimal + " ajouté avec succès";  // Message de succès
+   
+    if (this.newIdgroupe) {
+     
+      this.newgroupe = this.groupes.find(g => g.idGroupe == this.newIdgroupe)!;
+      this.newAnimal.groupe = this.newgroupe;
+
+   
+      this.animalService.ajouterAnimal(this.newAnimal);
+
+      this.router.navigate(['animaux']);
+   
+    
+    }
   }
 }
