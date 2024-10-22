@@ -13,11 +13,32 @@ export class AnimalService {
   ];
 
   animaux: Animal[] = [
-    { idAnimal: 1, nomAnimal: "Lion", especeAnimal: "Mammifère", dateNaissance: new Date("01/14/2010"), groupe: { idGroupe: 1, nomGroupe: "Mammifères" } },
-    { idAnimal: 2, nomAnimal: "Tigre", especeAnimal: "Mammifère", dateNaissance: new Date("03/05/2011"), groupe: { idGroupe: 1, nomGroupe: "Mammifères" } },
-    { idAnimal: 3, nomAnimal: "Éléphant", especeAnimal: "Mammifère", dateNaissance: new Date("07/10/2015"), groupe: { idGroupe: 1, nomGroupe: "Mammifères" } }
+    {
+      idAnimal: 1,
+      nomAnimal: "Lion",
+      especeAnimal: "Mammifère",
+      dateNaissance: new Date("01/14/2010"),
+      groupe: { idGroupe: 1, nomGroupe: "Mammifères" },
+      email: "lion@example.com" // Added email field
+    },
+    {
+      idAnimal: 2,
+      nomAnimal: "Tigre",
+      especeAnimal: "Mammifère",
+      dateNaissance: new Date("03/05/2011"),
+      groupe: { idGroupe: 1, nomGroupe: "Mammifères" },
+      email: "tigre@example.com" // Added email field
+    },
+    {
+      idAnimal: 3,
+      nomAnimal: "Éléphant",
+      especeAnimal: "Mammifère",
+      dateNaissance: new Date("07/10/2015"),
+      groupe: { idGroupe: 1, nomGroupe: "Mammifères" },
+      email: "elephant@example.com" // Added email field
+    }
   ];
-
+  
   // Méthode pour retourner la liste des animaux
   listeAnimaux(): Animal[] {
     return this.animaux;

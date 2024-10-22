@@ -6,4 +6,6 @@ export default class Animal {
   especeAnimal!: string;
   dateNaissance!: Date;
   groupe!: Groupe;
+
+  email!: string;
 }

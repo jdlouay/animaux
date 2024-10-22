@@ -17,20 +17,20 @@ export class RechercheParGroupeComponent implements OnInit {
   constructor(private animalService: AnimalService) {}
 
   ngOnInit(): void {
-    this.groupes = this.animalService.listeGroupes(); // Charger les groupes
+    this.groupes = this.animalService.listeGroupes(); 
   }
 
   // Méthode onChange pour rechercher les animaux par groupe
   onChange() {
-    this.animaux = this.animalService.rechercherParGroupe(this.IdGroupe); // Rechercher les animaux du groupe sélectionné
+    this.animaux = this.animalService.rechercherParGroupe(this.IdGroupe); 
   }
 
   // Méthode pour supprimer un animal
   supprimerAnimal(animal: Animal): void {
     const confirmation = confirm(`Voulez-vous vraiment supprimer l'animal ${animal.nomAnimal} ?`);
     if (confirmation) {
-      this.animalService.supprimerAnimal(animal); // Appeler le service pour supprimer l'animal
-      this.animaux = this.animaux.filter(a => a.idAnimal !== animal.idAnimal); // Mettre à jour la liste des animaux
+      this.animalService.supprimerAnimal(animal);
+      this.animaux = this.animaux.filter(a => a.idAnimal !== animal.idAnimal); 
     }
   }
 }

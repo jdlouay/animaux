@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnimauxComponent } from './animaux/animaux.component';
@@ -9,6 +9,9 @@ import { UpdateAnimalComponent } from './update-animal/update-animal.component';
 import { RechercheParGroupeComponent } from './recherche-par-groupe/recherche-par-groupe.component';
 import { RechercheParNomComponent } from './recherche-par-nom/recherche-par-nom.component';
 import { FilterPipe } from './filter.pipe';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 // Importation du composant UpdateAnimal
 
@@ -22,13 +25,18 @@ import { FilterPipe } from './filter.pipe';
     RechercheParGroupeComponent,
     RechercheParNomComponent,
     FilterPipe,
+    LoginComponent,
+    RegisterComponent,
+   
 
    // Déclaration du composant UpdateAnimal
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

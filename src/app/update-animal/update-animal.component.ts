@@ -1,48 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimalService } from '../services/animal.service';  // Service pour gérer les animaux
- // Modèle Animal
-import { Groupe } from '../model/groupe.model';  // Modèle Groupe
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';import { Groupe } from '../model/groupe.model';  // Modèle Groupe
 import Animal from '../model/animal.model';
 
 @Component({
   selector: 'app-update-animal',
   templateUrl: './update-animal.component.html',
-  styles: []
 })
 export class UpdateAnimalComponent implements OnInit {
   currentAnimal: Animal = new Animal();  // L'animal à modifier
   groupes!: Groupe[];  // Liste des groupes disponibles
   updatedGroupeId!: number;  // ID du groupe sélectionné
+  animalForm!: FormGroup;  // Reactive Form
 
   constructor(
-    private activatedRoute: ActivatedRoute,  // Pour récupérer l'ID depuis l'URL
-    private router: Router,  // Pour redirection après la mise à jour
-    private animalService: AnimalService  // Service pour gérer les animaux
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private animalService: AnimalService,
+    private formBuilder: FormBuilder  // Inject FormBuilder
+  ) {}
 
   ngOnInit(): void {
-   
+    // Fetch available groupes
     this.groupes = this.animalService.listeGroupes();
-
-    // Récupérer l'animal à modifier à partir de l'ID passé dans l'URL
+  
+    // Get the current animal based on the ID from the URL
     this.currentAnimal = this.animalService.consulterAnimal(this.activatedRoute.snapshot.params['id']);
-
-    // Initialiser l'ID du groupe sélectionné
-   this.animalService.consulterAnimal(this.activatedRoute.snapshot.params['id']);
-   this.updatedGroupeId=this.currentAnimal.groupe.idGroupe;
+  
+    // Initialize the Reactive Form with default values and validators
+    this.animalForm = this.formBuilder.group({
+      nomAnimal: [this.currentAnimal.nomAnimal, Validators.required],
+      especeAnimal: [this.currentAnimal.especeAnimal, Validators.required],
+      dateNaissance: [this.currentAnimal.dateNaissance, Validators.required],
+      groupe: [this.currentAnimal.groupe.idGroupe, Validators.required],
+      email: [this.currentAnimal.email, [Validators.required, Validators.email]], // Added email field
+    });
+  
+    // Initialize the selected group ID
+    this.updatedGroupeId = this.currentAnimal.groupe.idGroupe;
   }
 
-  // Méthode pour mettre à jour l'animal via le service
+  // Method to update the animal using the service
   updateAnimal(): void {
-    // Associer le groupe sélectionné à l'animal
-    this.currentAnimal.groupe = this.animalService.consulterGroupe(this.updatedGroupeId);
-  
-    // Mettre à jour l'animal via le service
-    this.animalService.updateAnimal(this.currentAnimal);
-  
-    // Rediriger vers la liste des animaux après la mise à jour
-    this.router.navigate(['animaux']);
+    if (this.animalForm.valid) {
+      // Merge form data into currentAnimal
+      const updatedAnimal: Animal = {
+        ...this.currentAnimal,
+        ...this.animalForm.value,
+        groupe: this.animalService.consulterGroupe(this.animalForm.value.groupe),
+      };
+
+      // Update the animal via the service
+      this.animalService.updateAnimal(updatedAnimal);
+
+      // Navigate back to the list of animals
+      this.router.navigate(['animaux']);
+    }
   }
-  
 }
